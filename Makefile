@@ -14,10 +14,13 @@
 REPOSITORY := sdurrheimer
 NAME       := prom-busybox
 BRANCH     := $(shell git rev-parse --abbrev-ref HEAD)
-DIRNAME    := $(shell basename $(CURDIR))
 SUFFIX     ?= -$(BRANCH)
+VERSIONS   ?= uclibc glibc
 
 build:
-	docker build -t "$(REPOSITORY)/$(NAME):$(DIRNAME)$(SUFFIX)" .
+	@./build.sh "$(REPOSITORY)/$(NAME)" "$(SUFFIX)" $(VERSIONS)
 
-.PHONY: build
+deps:
+	@./build_deps.sh "$(REPOSITORY)/$(NAME)" "$(SUFFIX)" $(VERSIONS)
+
+.PHONY: build deps
