@@ -14,8 +14,10 @@
 REPOSITORY := sdurrheimer
 NAME       := prom-busybox
 BRANCH     := $(shell git rev-parse --abbrev-ref HEAD)
+DIRNAME    := $(shell basename $(CURDIR))
+SUFFIX     ?= -$(BRANCH)
 
 build:
-	docker build -t "$(REPOSITORY)/$(NAME):$(BRANCH)" .
+	docker build -t "$(REPOSITORY)/$(NAME):$(DIRNAME)$(SUFFIX)" .
 
 .PHONY: build
